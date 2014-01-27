@@ -1,4 +1,4 @@
-class ApiController < ApplicationController
+      class ApiController < ApplicationController
   before_action :find_object, only: [:show, :update, :destroy]
   skip_before_filter :verify_authenticity_token
 
@@ -15,7 +15,7 @@ class ApiController < ApplicationController
 
     endpoint_attributes.each do |attr, val|
       if val.is_a? Hash
-        permitted_params << { attr => params[attr].keys }
+        permitted_params << { attr => params[attr].try(:keys) || [] }
       else
         permitted_params << attr
       end
@@ -32,27 +32,38 @@ class ApiController < ApplicationController
     end
   end
 
+  def create
+    @object = scope.new
+    update
+  end
+
+protected
+
   def singleton_response
     methods = endpoint_attributes.keys
 
     render json: {
-      object: @object.as_json(root: false, only: [], methods: methods)
+      object: @object.as_json(root: false, only: [], methods: (methods << 'uid'))
     }
   end
 
-protected
   def endpoint_attributes
     Quill::API.endpoints[params[:endpoint]]['attributes']
   end
 
   def find_object
-    @object = case params[:endpoint]
+    @object = scope.find_by_uid!(params[:id])
+  end
+
+  def scope
+    @scope ||= case params[:endpoint]
     when 'activities'
-      ActivityClassification.find_by_uid!(params[:cid]).activities.find_by_uid!(params[:id])
+      ActivityClassification.find_by_uid!(params[:cid]).activities
     else
-      params[:endpoint].singularize.constantize.find_by_uid!(params[:id])
+      params[:endpoint].singularize.camelize.constantize
     end
   end
+
   # rescue_from(Exception) do |e|
   #   binding.pry
   #   render json: { error_message: "We're sorry, but something went wrong. We've been notified about this issue and we'll take a look at it shortly." }, status: 500
