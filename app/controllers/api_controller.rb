@@ -1,4 +1,4 @@
-      class ApiController < ApplicationController
+class ApiController < ApplicationController
   before_action :find_object, only: [:show, :update, :destroy]
   skip_before_filter :verify_authenticity_token
 

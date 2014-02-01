@@ -1,0 +1,19 @@
+root:
+  activities:
+    attributes:
+      data: {}
+      name:
+      description:
+    readonly_attributes:
+      cid:
+  activity_sessions:
+    attributes:
+      percentage:
+      time_spent:
+      state:
+      completed_at:
+      data: {}
+      temporary:
+      activity_uid:
+    readonly_attributes:
+      anonymous:
