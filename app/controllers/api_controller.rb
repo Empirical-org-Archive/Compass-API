@@ -60,8 +60,10 @@ protected
   def scope
     @scope ||= case params[:endpoint]
     when 'activities'
+      Rails.logger.warn 'in one towaoeu'
       ActivityClassification.find_by_uid!(params[:cid]).activities
     else
+      Rails.logger.warn 'lets try to make a constant'
       params[:endpoint].singularize.camelize.constantize
     end
   end
