@@ -11,6 +11,7 @@ class ApiController < ApplicationController
   end
 
   def update
+    Rails.logger.warn('update')
     permitted_params = []
 
     endpoint_attributes.each do |attr, val|
@@ -33,6 +34,7 @@ class ApiController < ApplicationController
   end
 
   def create
+    Rails.logger.warn('step 1')
     @object = scope.new
     update
   end
