@@ -48,6 +48,9 @@ GEM
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-java)
+    better_errors (1.1.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     blankslate (2.1.2.4)
@@ -58,6 +61,8 @@ GEM
     coderay (1.0.9)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
+    doorkeeper (1.0.0)
+      railties (>= 3.1)
     erubis (2.7.0)
     excon (0.25.3)
     faraday (0.8.8)
@@ -113,8 +118,6 @@ GEM
     pry-stack_explorer (0.4.9)
       binding_of_caller (>= 0.7)
       pry (~> 0.9.11)
-    puma (2.6.0)
-      rack (>= 1.1, < 2.0)
     puma (2.6.0-java)
       rack (>= 1.1, < 2.0)
     racc (1.4.10)
@@ -408,7 +411,10 @@ DEPENDENCIES
   ancestry
   aws-sdk
   bcrypt-ruby
+  better_errors
+  binding_of_caller
   carrierwave
+  doorkeeper
   faraday_middleware
   fog
   iconv!

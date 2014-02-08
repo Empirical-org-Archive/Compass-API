@@ -1,9 +1,12 @@
 class ApiController < ApplicationController
   before_action :find_object, only: [:show, :update, :destroy]
-  skip_before_filter :verify_authenticity_token
 
-  rescue_from(ActionController::RoutingError) do
-    render json: { error_message: "The resource you were looking for does not exist" }, status: 404
+  rescue_from ActionController::RoutingError do
+    render json: { error_message: 'The resource you were looking for does not exist' }, status: 404
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do
+    render json: { error_message: 'The resource you were looking for does not exist with the given identifier' }, status: 404
   end
 
   def show
@@ -11,7 +14,6 @@ class ApiController < ApplicationController
   end
 
   def update
-    Rails.logger.warn('update')
     permitted_params = []
 
     endpoint_attributes.each do |attr, val|
@@ -34,7 +36,6 @@ class ApiController < ApplicationController
   end
 
   def create
-    Rails.logger.warn('step 1')
     @object = scope.new
     update
   end
@@ -58,14 +59,7 @@ protected
   end
 
   def scope
-    @scope ||= case params[:endpoint]
-    when 'activities'
-      Rails.logger.warn 'in one towaoeu'
-      ActivityClassification.find_by_uid!(params[:cid]).activities
-    else
-      Rails.logger.warn 'lets try to make a constant'
-      params[:endpoint].singularize.camelize.constantize
-    end
+    @scope ||= params[:endpoint].singularize.camelize.constantize
   end
 
   # rescue_from(Exception) do |e|

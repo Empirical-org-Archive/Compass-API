@@ -1,0 +1,1 @@
+../../../quill/config/initializers/doorkeeper.rb
