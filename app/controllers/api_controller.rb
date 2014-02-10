@@ -6,7 +6,11 @@ class ApiController < ApplicationController
   end
 
   rescue_from ActiveRecord::RecordNotFound do
-    render json: { error_message: 'The resource you were looking for does not exist with the given identifier' }, status: 404
+    render json: { error_message: 'The resource you were looking for does not exist with the given ID' }, status: 404
+  end
+
+  def index
+    render text: '', head: :ok
   end
 
   def show
@@ -16,7 +20,7 @@ class ApiController < ApplicationController
   def update
     permitted_params = []
 
-    endpoint_attributes.each do |attr, val|
+    endpoint.attributes.each do |attr, val|
       if val.is_a? Hash
         permitted_params << { attr => params[attr].try(:keys) || [] }
       else
@@ -29,29 +33,21 @@ class ApiController < ApplicationController
     if @object.save
       singleton_response
     else
-      render json: {
-        error: @object.errors
-      }
+      render json: { error: @object.errors }
     end
   end
 
   def create
     @object = scope.new
+    @object.set_owner(current_user) if @object.ownable?
     update
   end
 
 protected
 
   def singleton_response
-    methods = endpoint_attributes.keys
-
-    render json: {
-      object: @object.as_json(root: false, only: [], methods: (methods << 'uid'))
-    }
-  end
-
-  def endpoint_attributes
-    Quill::API.endpoints[params[:endpoint]]['attributes']
+    methods = endpoint.attributes.keys
+    render json: { object: @object.as_json(root: false, only: [], methods: (methods << 'uid')) }
   end
 
   def find_object

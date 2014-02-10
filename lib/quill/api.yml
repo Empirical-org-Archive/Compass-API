@@ -2,7 +2,12 @@ default_access: &default_access
   list: [all]
   read: [all]
   update: [owner, admin]
-  create: [all]
+  create: [user]
+  destroy: [owner, admin]
+default_singular_access: &default_singular_access
+  read: [all]
+  update: [owner, admin]
+  create: [user]
   destroy: [owner, admin]
 
 root:
@@ -30,3 +35,10 @@ root:
       anonymous:
     access:
       <<: *default_access
+      create: [all]
+  me:
+    attributes:
+      role:
+    options:
+      singular: true
+    access:
