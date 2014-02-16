@@ -16,8 +16,6 @@ root:
       data: {}
       name:
       description:
-    readonly_attributes:
-      cid:
     access:
       <<: *default_access
       create: [admin]

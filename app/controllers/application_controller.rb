@@ -16,7 +16,7 @@ protected
   def doorkeeper_token
     return @token if instance_variable_defined?(:@token)
     methods = Doorkeeper.configuration.access_token_methods
-    @token = OAuth::Token.authenticate request, *methods
+    @token = Doorkeeper::OAuth::Token.authenticate request, *methods
   end
 
   def endpoint
