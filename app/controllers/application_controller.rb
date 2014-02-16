@@ -20,6 +20,7 @@ protected
   end
 
   def endpoint
+    raise 'Endpoint is blank' if params[:endpoint].blank?
     Quill::API.endpoints[params[:endpoint]]
   end
 end
