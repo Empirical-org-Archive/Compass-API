@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authorize!
 
-protected
-
   def authorize!
     unless Authorization.new(self).permissable?
       head :unauthorized
