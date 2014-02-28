@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   before_action :find_object, only: [:show, :update, :destroy]
+  before_action :authorize!
 
   rescue_from ActionController::RoutingError do
     render json: { error_message: 'The resource you were looking for does not exist' }, status: 404
@@ -56,6 +57,29 @@ protected
 
   def scope
     @scope ||= params[:endpoint].singularize.camelize.constantize
+  end
+
+private
+
+  def authorize!
+    unless Authorization.new(self).permissable?
+      head :unauthorized
+    end
+  end
+
+  def current_user
+    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  end
+
+  def doorkeeper_token
+    return @token if instance_variable_defined?(:@token)
+    methods = Doorkeeper.configuration.access_token_methods
+    @token = Doorkeeper::OAuth::Token.authenticate request, *methods
+  end
+
+  def endpoint
+    raise 'Endpoint is blank' if params[:endpoint].blank?
+    Quill::API.endpoints[params[:endpoint]]
   end
 
   # rescue_from(Exception) do |e|
