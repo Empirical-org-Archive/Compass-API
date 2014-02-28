@@ -1,4 +1,8 @@
-class Authorization < SimpleDelegator
+class Authorization
+  def initialize controller
+    @controller = controller
+  end
+
   def permissable?
     endpoint.access[action].each do |level|
       return true if send(level)
@@ -46,5 +50,9 @@ private
 
   def oauth
     Doorkeeper::AllDoorkeeperFor.new({}).validate_token(doorkeeper_token)
+  end
+
+  def method_missing meth, *args
+    @controller.send meth, *args
   end
 end
