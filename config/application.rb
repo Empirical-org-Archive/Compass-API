@@ -16,9 +16,16 @@ class CorsMiddleware
   end
 
   def call env
+    cors_headers = {
+      'Access-Control-Allow-Origin'  => '*',
+    }
+
+    if env['REQUEST_METHOD'] == 'OPTIONS'
+      return [200, {'Content-Type' => 'text/plain', 'Access-Control-Allow-Headers' => env['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}.merge(cors_headers), ['ok']]
+    end
+
     status, headers, body = @app.call(env)
-    headers['Access-Control-Allow-Origin'] = '*'
-    response = Rack::Response.new(body, status, headers)
+    response = Rack::Response.new(body, status, headers.merge(cors_headers))
     response.finish
   end
 end

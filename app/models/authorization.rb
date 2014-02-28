@@ -22,7 +22,7 @@ protected
   end
 
   def admin
-    current_user.admin?
+    current_user.try(:admin?)
   end
 
 private

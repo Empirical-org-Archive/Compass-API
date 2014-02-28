@@ -4,6 +4,7 @@ default_access: &default_access
   update: [owner, admin]
   create: [user]
   destroy: [owner, admin]
+
 default_singular_access: &default_singular_access
   read: [all]
   update: [owner, admin]
@@ -29,14 +30,23 @@ root:
       data: {}
       temporary:
       activity_uid:
-    readonly_attributes:
       anonymous:
     access:
       <<: *default_access
       create: [all]
+
   me:
     attributes:
       role:
     options:
       singular: true
     access:
+
+  ping:
+    attributes:
+      session_id:
+      status:
+    options:
+      singular: true
+    access:
+      <<: *default_singular_access
