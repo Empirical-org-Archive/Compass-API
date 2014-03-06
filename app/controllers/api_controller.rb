@@ -62,6 +62,9 @@ protected
 private
 
   def authorize!
+    print 'Bearer'
+    puts env['HTTP_AUTHORIZATION']
+
     unless Authorization.new(self).permissable?
       head :unauthorized
     end
