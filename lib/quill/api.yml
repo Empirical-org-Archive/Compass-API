@@ -34,6 +34,7 @@ root:
     access:
       <<: *default_access
       create: [all]
+      read: [owner]
 
   me:
     attributes:
