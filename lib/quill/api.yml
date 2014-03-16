@@ -40,9 +40,13 @@ root:
   me:
     attributes:
       role:
+      name:
+      email:
+      username:
     options:
       singular: true
     access:
+      <<: *default_singular_access
 
   ping:
     attributes:

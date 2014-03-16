@@ -52,7 +52,11 @@ protected
   end
 
   def find_object
-    @object = scope.find_by_uid!(params[:id])
+    if endpoint.options.try(:[], 'singular')
+      @object = scope.new(self)
+    else
+      @object = scope.find_by_uid!(params[:id])
+    end
   end
 
   def scope
