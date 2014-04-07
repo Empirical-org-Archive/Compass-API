@@ -12,7 +12,18 @@ default_singular_access: &default_singular_access
   destroy: [owner, admin]
 
 root:
+  title: Compass API
+  description: |
+    API to interact with Compass. Include +access_token+ when authentication
+    is required.
+
+
   activities:
+    description: |
+
+      Programmatically interact with Activities on Compass. Typically only will
+      read individual records from this resource.
+
     attributes:
       data: {}
       name:
@@ -22,7 +33,16 @@ root:
       create: [admin]
       update: [admin]
 
+
   activity_sessions:
+    description: |
+
+      Compass activity sessions are used to store progress information about a
+      user's interaction with an activity. Session's can be created without an
+      +access_token+ to allow anonymous access. If you have an ID of an
+      anonymous session you should also be able to update it without an
+      +access_token+.
+
     attributes:
       percentage:
       time_spent:
@@ -37,7 +57,13 @@ root:
       create: [all]
       read: [owner]
 
+
   me:
+    description: |
+
+      Request information about the current authenticated user based on
+      +access_token+.
+
     attributes:
       role:
       name:
@@ -49,6 +75,8 @@ root:
       <<: *default_singular_access
 
   ping:
+    description: |
+      Alive check.
     attributes:
       session_id:
       status:
