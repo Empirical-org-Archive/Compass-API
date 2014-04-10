@@ -35,6 +35,10 @@ module Quill
       super(spec)
     end
 
+    def dup
+      self.class.new(name, self)
+    end
+
     def singular?
       options.singular
     end
