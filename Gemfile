@@ -35,3 +35,5 @@ platforms :rbx do
   gem 'iconv', github: 'nurse/iconv', branch: 'master'
   gem 'rubinius-coverage'
 end
+
+gem 'iron_cache_rails'
