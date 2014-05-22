@@ -6,8 +6,8 @@ class ApiController < ApplicationController
     render json: { error_message: 'The resource you were looking for does not exist' }, status: 404
   end
 
-  rescue_from ActiveRecord::RecordNotFound do
-    render json: { error_message: 'The resource you were looking for does not exist with the given ID' }, status: 404
+  rescue_from ActiveRecord::RecordNotFound do |e|
+    render json: { error_message: 'The resource you were looking for does not exist with the given ID '+ e.inspect }, status: 404
   end
 
   def index
