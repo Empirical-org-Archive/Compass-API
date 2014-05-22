@@ -116,7 +116,7 @@ GEM
     nokogiri (1.5.9-java)
     parslet (1.5.0)
       blankslate (~> 2.0)
-    pg (0.14.1)
+    pg (0.17.1)
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
@@ -134,6 +134,8 @@ GEM
       pry (~> 0.9.11)
     puma (2.6.0-java)
       rack (>= 1.1, < 2.0)
+    queue_classic (3.0.0rc)
+      pg (~> 0.17.0)
     racc (1.4.10)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -447,6 +449,7 @@ DEPENDENCIES
   pry-rails
   pry-stack_explorer
   puma
+  queue_classic (= 3.0.0rc)
   racc
   rails (~> 4)
   rails_12factor
