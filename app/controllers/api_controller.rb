@@ -7,7 +7,7 @@ class ApiController < ApplicationController
   end
 
   rescue_from ActiveRecord::RecordNotFound do |e|
-    render json: { error_message: 'The resource you were looking for does not exist with the given ID '+ e.inspect }, status: 404
+    render json: { error_message: 'The resource you were looking for does not exist with the given ID '+ e.inspect + e.backtrace.inspect }, status: 404
   end
 
   def index
