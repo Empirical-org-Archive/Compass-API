@@ -23,6 +23,7 @@ gem 'pry-rails',          group: %w(development test)
 gem 'pry-stack_explorer', group: %w(development test)
 gem 'faraday_middleware'
 gem 'doorkeeper'
+gem 'queue_classic', '3.0.0rc'
 
 group :development do
   gem 'better_errors'
