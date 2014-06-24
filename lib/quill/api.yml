@@ -17,7 +17,6 @@ root:
     API to interact with Compass. Include +access_token+ when authentication
     is required.
 
-
   activities:
     description: |
 
@@ -56,7 +55,6 @@ root:
       <<: *default_access
       create: [all]
       read: [owner]
-
 
   me:
     description: |
